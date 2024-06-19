@@ -16,6 +16,7 @@ import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../HomePage/components/FooterComponent/Footer";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function DriverRegisterPage() {
   const [name, setName] = useState("");
@@ -31,7 +32,7 @@ function DriverRegisterPage() {
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -39,8 +40,10 @@ function DriverRegisterPage() {
     if (!name) newErrors.name = "Name is required";
     if (!email) newErrors.email = "Email is required";
     if (!password) newErrors.password = "Password is required";
-    if (password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match";
-    if (!driver_license) newErrors.driverLicense = "Driver License Number is required";
+    if (password !== confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
+    if (!driver_license)
+      newErrors.driverLicense = "Driver License Number is required";
     if (!license_plate) newErrors.licensePlate = "License Plate is required";
     if (!car_model) newErrors.carModel = "Car Model is required";
     if (!carYear) newErrors.carYear = "Car Year is required";
@@ -51,25 +54,30 @@ function DriverRegisterPage() {
     if (Object.keys(newErrors).length === 0) {
       // Call API to register driver
       try {
-        const response = await fetch("http://localhost:8081/DriverRegisterPage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name,
-            email,
-            password,
-            confirmPassword,
-            driver_license,
-            license_plate,
-            car_model,
-            carYear,
-            numberOfSite,
-          }),
-        });
+        const response = await fetch(
+          "http://localhost:8081/DriverRegisterPage",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name,
+              email,
+              password,
+              confirmPassword,
+              driver_license,
+              license_plate,
+              car_model,
+              carYear,
+              numberOfSite,
+            }),
+          }
+        );
         const data = await response.json();
         // Handle registration success
         console.log(data);
-      } catch (error) {
+        navigate("/driver"); // Navigate to  driver page on success
+      }
+      catch (error) {
         setErrors({ api: error.message });
       }
     }
@@ -234,9 +242,11 @@ function DriverRegisterPage() {
               />
               <FormErrorMessage>{errors.carYear}</FormErrorMessage>
             </FormControl>
-            <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-              Sign Up
-            </Button>
+
+              <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
+                Sign Up
+              </Button>
+
             {errors.api && (
               <Box color="red.500" mt={4}>
                 {errors.api}

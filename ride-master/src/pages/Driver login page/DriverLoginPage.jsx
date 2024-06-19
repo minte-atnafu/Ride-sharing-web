@@ -31,7 +31,7 @@ const DriverLoginPage = () => {
     if (Object.keys(errors).length === 0) {
       // Call API to login driver
       try {
-        const response = await fetch("http://localhost:8081/Driver", {
+        const response = await fetch("http://localhost:8081/DriverLoginPage", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
