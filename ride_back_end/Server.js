@@ -90,7 +90,22 @@ app.post("/DriverRegisterPage", (req, res) => {
 });
 
 //for driver login
-
+app.post("/DriverLoginPage", (req, res) => {
+  const { email, password } = req.body;
+  const sql = "SELECT * FROM drivers WHERE email = ? AND password = ?";
+  
+  db.query(sql, [email, password], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json("Database error");
+    }
+    if (data.length > 0) {
+      return res.status(200).json({ message: "Login successful", user: data[0] });
+    } else {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+  });
+});
 
 
 app.listen(8081, () => {
