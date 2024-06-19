@@ -13,34 +13,50 @@ import {
 import React, { useState } from "react";
 import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../HomePage/components/FooterComponent/Footer";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PassangerRegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState({});
+  const [show, setShow] = useState(false);
 
-  const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Call API to login driver
-    try {
-      const response = await fetch("/api/drivers/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      // Handle login success
-      console.log(data);
-    } catch (error) {
-      setError(error.message);
+    // Form validation (dummy example)
+    let errors = {};
+    if (!name) errors.name = "Name is required";
+    if (!email) errors.email = "Email is required";
+    if (!password) errors.password = "Password is required";
+    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+    if (!phoneNumber) errors.phoneNumber = "Phone number is required";
+
+    setError(errors);
+
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await fetch("http://localhost:8081/PassangerRegisterPage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password, confirmPassword, phoneNumber }),
+        });
+        const data = await response.json();
+        // Handle registration success
+        console.log(data);
+        navigate("/account"); // Navigate to account page on success
+      } catch (error) {
+        setError({ server: error.message });
+      }
     }
   };
+
   return (
     <Box>
       <Box mb={70}>
@@ -49,7 +65,7 @@ function PassangerRegisterPage() {
 
       <Box>
         <Box
-          bg="goldenrod"
+          bg="blueblack"
           minH="80vh"
           py={20}
           px={4}
@@ -61,11 +77,25 @@ function PassangerRegisterPage() {
         >
           <Flex justify="center" mb={4}>
             <Heading as="h1" size="lg" color="gray.600">
-              passanger Register
+              Passenger Register
             </Heading>
           </Flex>
           <form onSubmit={handleSubmit}>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={error.name}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                Name
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Enter your name"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{error.name}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={error.email}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Email
               </FormLabel>
@@ -77,9 +107,9 @@ function PassangerRegisterPage() {
                 placeholder="Enter your email"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{error.email}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={error.password}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Password
               </FormLabel>
@@ -92,16 +122,18 @@ function PassangerRegisterPage() {
                   placeholder="Enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
-
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
                     {show ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <FormErrorMessage>{error.password}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={error.confirmPassword}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                confirm you password
-              </FormLabel>{" "}
+                Confirm Password
+              </FormLabel>
               <InputGroup size="md">
                 <Input
                   color={"blue.200"}
@@ -111,23 +143,34 @@ function PassangerRegisterPage() {
                   placeholder="Re-Enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
-
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
                     {show ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                your driver license number
-              </FormLabel>{" "}
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{error.confirmPassword}</FormErrorMessage>
             </FormControl>
-            <Link to={"/account"}>
-              <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-                sign up
-              </Button>
-            </Link>
+            <FormControl isInvalid={error.phoneNumber}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                Phone Number
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                type="tel"
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
+                placeholder="Enter your phone number"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{error.phoneNumber}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={error.server}>
+              <FormErrorMessage>{error.server}</FormErrorMessage>
+            </FormControl>
+            <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
+              Sign Up
+            </Button>
           </form>
         </Box>
       </Box>

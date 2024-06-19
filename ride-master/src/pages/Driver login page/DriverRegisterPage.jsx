@@ -18,32 +18,46 @@ import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function DriverRegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [driverLicense, setDriverLicense] = useState("");
+  const [licensePlate, setLicensePlate] = useState("");
+  const [carModel, setCarModel] = useState("");
+  const [carYear, setCarYear] = useState("");
 
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Call API to login driver
+    // Call API to register driver
     try {
-      const response = await fetch("/api/drivers/login", {
+      const response = await fetch("http://localhost:8081/DriverRegisterPage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          confirmPassword,
+          driverLicense,
+          licensePlate,
+          carModel,
+          carYear,
+        }),
       });
       const data = await response.json();
-      // Handle login success
+      // Handle registration success
       console.log(data);
     } catch (error) {
       setError(error.message);
     }
   };
+
   return (
     <Box>
       <Box mb={70}>
@@ -68,6 +82,20 @@ function DriverRegisterPage() {
             </Heading>
           </Flex>
           <form onSubmit={handleSubmit}>
+            <FormControl isInvalid={error}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                Name
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Enter your name"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{error}</FormErrorMessage>
+            </FormControl>
             <FormControl isInvalid={error}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Email
@@ -95,7 +123,6 @@ function DriverRegisterPage() {
                   placeholder="Enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
-
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
                     {show ? "Hide" : "Show"}
@@ -103,41 +130,83 @@ function DriverRegisterPage() {
                 </InputRightElement>
               </InputGroup>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                confirm you password
-              </FormLabel>{" "}
+                Confirm Your Password
+              </FormLabel>
               <InputGroup size="md">
                 <Input
                   color={"blue.200"}
                   type={show ? "text" : "password"}
-                  value={password}
+                  value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
-                  placeholder="Re-Enter your password"
+                  placeholder="Re-enter your password"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
-
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
                     {show ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <FormErrorMessage>{error}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={error}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                your driver license number
-              </FormLabel>{" "}
+                Your Driver License Number
+              </FormLabel>
               <Input
                 color={"blue.200"}
                 value={driverLicense}
                 onChange={(event) => setDriverLicense(event.target.value)}
-                placeholder="enter you driver license number"
+                placeholder="Enter your driver license number"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{error}</FormErrorMessage>
             </FormControl>
-            <Link to={"/driver"}>
-              <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-                sign up
-              </Button>
+            <FormControl isInvalid={error}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                License Plate
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                value={licensePlate}
+                onChange={(event) => setLicensePlate(event.target.value)}
+                placeholder="Enter your license plate"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{error}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={error}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                Car Model
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                value={carModel}
+                onChange={(event) => setCarModel(event.target.value)}
+                placeholder="Enter your car model"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{error}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={error}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                Car Year
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                value={carYear}
+                onChange={(event) => setCarYear(event.target.value)}
+                placeholder="Enter your car year"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{error}</FormErrorMessage>
+            </FormControl>
+            <Link to = {"/driver"}>
+            <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
+              Sign Up
+            </Button>
             </Link>
+
           </form>
         </Box>
       </Box>

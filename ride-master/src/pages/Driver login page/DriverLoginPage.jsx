@@ -84,9 +84,13 @@ const DriverLoginPage = () => {
             />
             <FormErrorMessage color={"red"}>{error}</FormErrorMessage>
           </FormControl>
+
+          <Link to={"/driver"}>
           <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
             Login
           </Button>
+          </Link>
+     
         </form>
         <Text mt={4} fontSize="sm" color="gray.600">
           Don't have an account?{" "}
