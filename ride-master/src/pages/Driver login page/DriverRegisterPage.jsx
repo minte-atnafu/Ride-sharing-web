@@ -22,11 +22,11 @@ function DriverRegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [driverLicense, setDriverLicense] = useState("");
-  const [licensePlate, setLicensePlate] = useState("");
-  const [carModel, setCarModel] = useState("");
+  const [driver_license, setdriver_license] = useState("");
+  const [license_plate, setlicense_plate] = useState("");
+  const [car_model, setcar_model] = useState("");
   const [carYear, setCarYear] = useState("");
-  const [numberOfSites, setNumberOfSites] = useState("");
+  const [numberOfSite, setnumberOfSite] = useState("");
   const [errors, setErrors] = useState({});
 
   const [show, setShow] = useState(false);
@@ -40,11 +40,11 @@ function DriverRegisterPage() {
     if (!email) newErrors.email = "Email is required";
     if (!password) newErrors.password = "Password is required";
     if (password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match";
-    if (!driverLicense) newErrors.driverLicense = "Driver License Number is required";
-    if (!licensePlate) newErrors.licensePlate = "License Plate is required";
-    if (!carModel) newErrors.carModel = "Car Model is required";
+    if (!driver_license) newErrors.driverLicense = "Driver License Number is required";
+    if (!license_plate) newErrors.licensePlate = "License Plate is required";
+    if (!car_model) newErrors.carModel = "Car Model is required";
     if (!carYear) newErrors.carYear = "Car Year is required";
-    if (!numberOfSites) newErrors.numberOfSites = "Number of Sites is required";
+    if (!numberOfSite) newErrors.numberOfSite = "Number of Sites is required";
 
     setErrors(newErrors);
 
@@ -59,11 +59,11 @@ function DriverRegisterPage() {
             email,
             password,
             confirmPassword,
-            driverLicense,
-            licensePlate,
-            carModel,
+            driver_license,
+            license_plate,
+            car_model,
             carYear,
-            numberOfSites,
+            numberOfSite,
           }),
         });
         const data = await response.json();
@@ -169,57 +169,57 @@ function DriverRegisterPage() {
               </InputGroup>
               <FormErrorMessage>{errors.confirmPassword}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.driverLicense}>
+            <FormControl isInvalid={errors.driver_license}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Your Driver License Number
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={driverLicense}
-                onChange={(event) => setDriverLicense(event.target.value)}
+                value={driver_license}
+                onChange={(event) => setdriver_license(event.target.value)}
                 placeholder="Enter your driver license number"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.driverLicense}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.licensePlate}>
+            <FormControl isInvalid={errors.license_plate}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 License Plate
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={licensePlate}
-                onChange={(event) => setLicensePlate(event.target.value)}
+                value={license_plate}
+                onChange={(event) => setlicense_plate(event.target.value)}
                 placeholder="Enter your license plate"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.licensePlate}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.carModel}>
+            <FormControl isInvalid={errors.car_model}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Car Model
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={carModel}
-                onChange={(event) => setCarModel(event.target.value)}
+                value={car_model}
+                onChange={(event) => setcar_model(event.target.value)}
                 placeholder="Enter your car model"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{errors.carModel}</FormErrorMessage>
+              <FormErrorMessage>{errors.car_model}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.numberOfSites}>
+            <FormControl isInvalid={errors.numberOfSite}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Number of Sites
               </FormLabel>
               <Input
                 color={"blue.200"}
-                value={numberOfSites}
-                onChange={(event) => setNumberOfSites(event.target.value)}
+                value={numberOfSite}
+                onChange={(event) => setnumberOfSite(event.target.value)}
                 placeholder="Enter number of sites"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{errors.numberOfSites}</FormErrorMessage>
+              <FormErrorMessage>{errors.numberOfSite}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.carYear}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>

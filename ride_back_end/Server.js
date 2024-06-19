@@ -12,6 +12,15 @@ const db = mysql.createConnection({
   password: "1993minte@",
   database: "ridesharingapp",
 });
+db.connect(err => {
+  if (err) {
+    console.error('Database connection failed: ' + err.stack);
+    // Optionally, you can terminate the application here or handle the error in some other way
+    process.exit(1);
+  }
+  console.log('Connected to MySQL database.');
+});
+
 // passegener registration page
 app.post("/PassangerRegisterPage", (req, res) => {
   const sql = "INSERT INTO users (name, email, password, confirmPassword, phone_Number) VALUES (?)";
@@ -51,35 +60,35 @@ app.post("/PassangerLoginPage", (req, res) => {
   
 //for driver registration
 app.post("/DriverRegisterPage", (req, res) => {
-    const { name, email, password, driver_License, license_Plate, carModel, carYear,no_site} = req.body;
-  
-    // Insert into drivers table
-    const sqlDrivers = "INSERT INTO drivers (name, email, password, driver_license) VALUES (?, ?, ?, ?)";
-    const driverValues = [name, email, password, driver_License];
-  
-    db.query(sqlDrivers, driverValues, (err, result) => {
+  const { name, email, password, driver_license, license_plate, car_model, carYear, numberOfSite } = req.body;
+
+  // Insert into drivers table
+  const sqlDrivers = "INSERT INTO drivers (name, email, password, driver_license) VALUES (?, ?, ?, ?)";
+  const driverValues = [name, email, password, driver_license];
+
+  db.query(sqlDrivers, driverValues, (err, result) => {
+    if (err) {
+      console.error("Error inserting into drivers table:", err);
+      return res.status(500).json("Database error");
+    }
+
+    const driver_id = result.insertId;
+
+    // Insert into carinfo table
+    const sqlCarInfo = "INSERT INTO carinfo (driver_id, car_model, carYear, license_plate, numberOfSite) VALUES (?, ?, ?, ?, ?)";
+    const carInfoValues = [driver_id, car_model, carYear, license_plate, numberOfSite];
+
+    db.query(sqlCarInfo, carInfoValues, (err, result) => {
       if (err) {
-        console.error("Error inserting into drivers table:", err);
+        console.error("Error inserting into carinfo table:", err);
         return res.status(500).json("Database error");
       }
-  
-      const driver_id = result.insertId;
-  
-      // Insert into car_info table
-      const sqlCarInfo = "INSERT INTO car_info (driver_id, car_model, car_year, license_plate,no_site) VALUES (?, ?, ?, ?)";
-      const carInfoValues = [driver_id, carModel, carYear, license_Plate,no_site];
-  
-      db.query(sqlCarInfo, carInfoValues, (err, result) => {
-        if (err) {
-          console.error("Error inserting into car_info table:", err);
-          return res.status(500).json("Database error");
-        }
-  
-        return res.status(200).json("Driver registered successfully");
-      });
+
+      return res.status(200).json("Driver registered successfully");
     });
+  });
 });
-  
+
 //for driver login
 
 app.listen(8081, () => {
