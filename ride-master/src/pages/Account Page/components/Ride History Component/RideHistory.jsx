@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Text,
   Heading,
   Input,
-  Button,
   Table,
   Thead,
   Tbody,
@@ -17,34 +16,29 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-const rideHistory = [
-  {
-    date: "2022-01-01",
-    time: "12:00 PM",
-    pickup: "123 Main St",
-    dropoff: "456 Elm St",
-    driver: "Jane Smith",
-    car: "Toyota Camry",
-    fare: "$20.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    date: "2022-01-05",
-    time: "2:00 PM",
-    pickup: "789 Oak St",
-    dropoff: "321 Maple St",
-    driver: "John Doe",
-    car: "Honda Civic",
-    fare: "$30.00",
-    paymentMethod: "Debit Card",
-  },
-  // Add more rides as needed
-];
-
 const RideHistory = () => {
+  const [rideHistory, setRideHistory] = useState([]);
+  useEffect(() => {
+    const fetchRideHistory = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/ride-history");
+        if (!response.ok) {
+          throw new Error("Failed to fetch ride history");
+        }
+        const data = await response.json();
+        setRideHistory(data);
+      } catch (error) {
+        console.error("Error fetching ride history:", error);
+      }
+    };
+
+    fetchRideHistory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [filterDateRange, setFilterDateRange] = useState({
-    startDate: null,
-    endDate: null,
+    startDate: "",
+    endDate: "",
   });
   const [filterPaymentMethod, setFilterPaymentMethod] = useState(null);
   const [sortBy, setSortBy] = useState(null);
@@ -55,7 +49,7 @@ const RideHistory = () => {
     // Filter by date range
     if (filterDateRange.startDate || filterDateRange.endDate) {
       filteredRides = filteredRides.filter((ride) => {
-        const rideDate = new Date(ride.date);
+        const rideDate = new Date(ride.travel_date);
         const startDate = filterDateRange.startDate
           ? new Date(filterDateRange.startDate)
           : null;
@@ -105,13 +99,12 @@ const RideHistory = () => {
       return 0;
     });
   };
-
   const filteredAndSortedRides = sortRides(filterRides(rideHistory));
 
   return (
-    <Box p={14} borderBlock={'Background'}  mb={10} borderRadius={10}>
+    <Box p={14} borderBlock={"Background"} mb={10} borderRadius={10}>
       <Center>
-        <Heading as="h1" size="lg" mb={4} color={'goldenrod'} p={10}>
+        <Heading as="h1" size="lg" mb={4} color={"goldenrod"} p={10}>
           Ride History
         </Heading>
       </Center>
@@ -158,6 +151,7 @@ const RideHistory = () => {
         </Box>
       </HStack>
 
+
       <Box mb={4}>
         <Text fontWeight="bold">Sort by:</Text>
         <Select
@@ -174,33 +168,29 @@ const RideHistory = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>Date</Th>
-              <Th>Time</Th>
+              <Th>Ride Id</Th>
               <Th>Pickup</Th>
               <Th>Dropoff</Th>
-              <Th>Driver</Th>
+              <Th>Coustomer</Th>
               <Th>Car</Th>
-              <Th>Fare</Th>
+              <Th>A mount</Th>
               <Th>Payment Method</Th>
-              <Th>Receipt</Th>
+              <Th>Status</Th>
+              <Th>Date</Th>
             </Tr>
           </Thead>
           <Tbody>
             {filteredAndSortedRides.map((ride, index) => (
               <Tr key={index}>
-                <Td>{ride.date}</Td>
-                <Td>{ride.time}</Td>
-                <Td>{ride.pickup}</Td>
-                <Td>{ride.dropoff}</Td>
-                <Td>{ride.driver}</Td>
+                <Td>{ride.ride_id}</Td>
+                <Td>{ride.s_address}</Td>
+                <Td>{ride.d_address}</Td>
+                <Td>{ride.username}</Td>
                 <Td>{ride.car}</Td>
                 <Td>{ride.fare}</Td>
                 <Td>{ride.paymentMethod}</Td>
-                <Td>
-                  <Button size="sm" variant="outline">
-                    Download Receipt
-                  </Button>
-                </Td>
+                <Td>{ride.status}</Td>
+                <Td>{ride.travel_date}</Td>
               </Tr>
             ))}
           </Tbody>

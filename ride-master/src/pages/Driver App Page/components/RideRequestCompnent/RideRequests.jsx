@@ -15,33 +15,37 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
+// eslint-disable-next-line react/prop-types
 const RideRequests = ({ requests }) => {
   const bgColor = useColorModeValue("gray.100", "gray.700");
   const [filters, setFilters] = useState({
-    pickupLocation: "",
-    Destination: "",
-    EstimatedFare: "",
-    numPassengers: "",
+    s_address: "",
+    d_address: "",
+    no_site: "",
   });
 
-  const handleAccept = (requestId) => {
-    // handle accepting the request
-  };
+  // const handleAccept = (requestId) => {
+  //   // handle accepting the request
+  // };
 
-  const handleDecline = (requestId) => {
-    // handle declining the request
-  };
+  // const handleDecline = (requestId) => {
+  //   // handle declining the request
+  // };
   const handleFilterChange = (filter, value) => {
     setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
   };
 
+  // eslint-disable-next-line react/prop-types
   const filteredRideRequest = requests.filter((request) => {
-  if (filters.numPassengers && request.numPassengers < filters.numPassengers) return false;
-  if (filters.pickupLocation && request.pickupLocation !== filters.pickupLocation) return false;
-  if (filters.Destination && request.destination !== filters.Destination) return false;
-  if (filters.EstimatedFare && request.estimatedFare < filters.EstimatedFare) return false;
-  return true;
-});
+    if (filters.no_site && request.no_site < filters.no_site) return false;
+    if (filters.s_address && request.s_address !== filters.s_address)
+      return false;
+    if (filters.d_address && request.d_address !== filters.d_address)
+      return false;
+    if (filters.EstimatedFare && request.estimatedFare < filters.EstimatedFare)
+      return false;
+    return true;
+  });
 
   return (
     <Box
@@ -67,17 +71,23 @@ const RideRequests = ({ requests }) => {
 
       {/* filter section  */}
 
-      <Box p={10} >
+      <Box p={10}>
         <VStack spacing={4}>
-          <Text fontSize={'large'} color={"dark"} textAlign={"center"} backgroundColor={'blue.200'} borderRadius={'50%'} p={5} fontWeight={'bolder'}>
+          <Text
+            fontSize={"large"}
+            color={"dark"}
+            textAlign={"center"}
+            backgroundColor={"blue.200"}
+            borderRadius={"50%"}
+            p={5}
+            fontWeight={"bolder"}
+          >
             Filter by
           </Text>
           <HStack spacing={6}>
             <Select
-              value={filters.numPassengers}
-              onChange={(e) =>
-                handleFilterChange("numPassengers", e.target.value)
-              }
+              value={filters.no_site}
+              onChange={(e) => handleFilterChange("no_site", e.target.value)}
               placeholder="Number of Passengers"
               backgroundColor={"blue.300"}
             >
@@ -88,11 +98,9 @@ const RideRequests = ({ requests }) => {
               <option value="5">5</option>
             </Select>
             <Select
-              value={filters.pickupLocation}
-              onChange={(e) =>
-                handleFilterChange("pickupLocation", e.target.value)
-              }
-              placeholder="pick up location"
+              value={filters.s_address}
+              onChange={(e) => handleFilterChange("s_address", e.target.value)}
+              placeholder="starting address"
               backgroundColor={"blue.300"}
             >
               <option value="1">1</option>
@@ -103,10 +111,8 @@ const RideRequests = ({ requests }) => {
             </Select>
 
             <Select
-              value={filters.Destination}
-              onChange={(e) =>
-                handleFilterChange("Destination", e.target.value)
-              }
+              value={filters.d_address}
+              onChange={(e) => handleFilterChange("d_address", e.target.value)}
               placeholder="Destination"
               backgroundColor={"blue.300"}
             >
@@ -116,24 +122,10 @@ const RideRequests = ({ requests }) => {
               <option value="4">4</option>
               <option value="5">5</option>
             </Select>
-
-            <Select
-              value={filters.EstimatedFare}
-              onChange={(e) =>
-                handleFilterChange("EstimatedFare", e.target.value)
-              }
-              placeholder="Fare"
-              backgroundColor={"blue.300"}
-            >
-              <option value="1">100 ብር</option>
-              <option value="2">200 ብር</option>
-              <option value="3 ">300 ብር</option>
-              <option value="4">400 ብር</option>
-              <option value="5">500 ብር</option>
-            </Select>
           </HStack>
         </VStack>
       </Box>
+
 
       {filteredRideRequest && (
         <List spacing={4}>
@@ -152,14 +144,13 @@ const RideRequests = ({ requests }) => {
                 />
                 <Spacer />
                 <Box>
-                  <Text fontWeight="bold">{request.passengerName}</Text>
+                  <Text fontWeight="bold">{request.passangerName}</Text>
                   <Text>
-                    {request.pickupLocation} - {request.destination}
+                    {request.s_address} To {request.d_address}{" "}
                   </Text>
-                  <Text>Estimated fare: ${request.estimatedFare}</Text>
                   <Text>
-                    {request.numPassengers}{" "}
-                    {request.numPassengers > 1 ? "passengers" : "passenger"}
+                    {request.no_site}{" "}
+                    {request.no_site > 1 ? "passengers" : "passenger"}
                   </Text>
                 </Box>
                 <Spacer />
@@ -169,6 +160,7 @@ const RideRequests = ({ requests }) => {
                     variant="solid"
                     size="sm"
                     mr={2}
+                    // eslint-disable-next-line no-undef
                     onClick={() => handleAccept(request.id)}
                   >
                     Accept
@@ -177,6 +169,7 @@ const RideRequests = ({ requests }) => {
                     colorScheme="red"
                     variant="solid"
                     size="sm"
+                    // eslint-disable-next-line no-undef
                     onClick={() => handleDecline(request.id)}
                   >
                     Decline

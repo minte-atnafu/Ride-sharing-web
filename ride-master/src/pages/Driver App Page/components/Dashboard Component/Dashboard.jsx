@@ -13,99 +13,33 @@ import {
   Center,
   HStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import {
-  FaHandPointRight,
-  FaStar,
-} from "react-icons/fa";
+import { FaHandPointRight, FaStar } from "react-icons/fa";
 import RideRequest from "../RideRequestCompnent/RideRequests";
+import { useEffect, useState } from "react";
 
-const DriverDashboard = () => {
+const RideRequestsComponent = () => {
+  const [rideRequests, setRideRequests] = useState([]);
   const [isOnline, setIsOnline] = useState(true);
+  useEffect(() => {
+    const fetchRideRequests = async () => {
+      try {
+        const response = await fetch("http://localhost:8081/ride-request");
+        if (!response.ok) {
+          throw new Error("Failed to fetch ride requests");
+        }
+        const data = await response.json();
+        setRideRequests(data);
+      } catch (error) {
+        console.error("Error fetching ride requests:", error);
+      }
+    };
 
-  const sampleRequests = [
-    {
-      id: 1,
-      passengerName: "John Doe",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "123 Main St",
-      destination: "456 Elm St",
-      estimatedFare: 15.5,
-      numPassengers: 1,
-    },
-    {
-      id: 2,
-      passengerName: "Jane Smith",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "789 Oak St",
-      destination: "321 Pine St",
-      estimatedFare: 20.0,
-      numPassengers: 2,
-    },
-    {
-      id: 3,
-      passengerName: "Bob Johnson",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "654 Maple St",
-      destination: "890 Birch St",
-      estimatedFare: 25.5,
-      numPassengers: 3,
-    },
-    {
-      id: 4,
-      passengerName: "Bob Johnson",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "654 Maple St",
-      destination: "890 Birch St",
-      estimatedFare: 25.5,
-      numPassengers: 3,
-    },
-    {
-      id: 5,
-      passengerName: "Bob Johnson",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "654 Maple St",
-      destination: "890 Birch St",
-      estimatedFare: 25.5,
-      numPassengers: 3,
-    },
-    {
-      id: 6,
-      passengerName: "Bob Johnson",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "654 Maple St",
-      destination: "890 Birch St",
-      estimatedFare: 25.5,
-      numPassengers: 3,
-    },
-    {
-      id: 7,
-      passengerName: "Bob Johnson",
-      passengerPhoto: "https://via.placeholder.com/40x40",
-      pickupLocation: "654 Maple St",
-      destination: "890 Birch St",
-      estimatedFare: 25.5,
-      numPassengers: 3,
-    },
-  ];
-  const [upcomingRides, setUpcomingRides] = useState([
-    {
-      id: 1,
-      passengerName: "John Doe",
-      pickupLocation: "123 Main St",
-      estimatedArrivalTime: "10:00 AM",
-    },
-    {
-      id: 2,
-      passengerName: "Jane Doe",
-      pickupLocation: "456 Elm St",
-      estimatedArrivalTime: "11:00 AM",
-    },
-  ]);
-  const [earnings, setEarnings] = useState({
+    fetchRideRequests();
+  }, []);
+  const earnings = {
     daily: "$100.00",
     weekly: "$500.00",
-  });
+  };
 
   const handleToggleOnlineStatus = () => {
     setIsOnline(!isOnline);
@@ -148,7 +82,8 @@ const DriverDashboard = () => {
           alignItems={"center"}
         >
           <FaHandPointRight size={100} />
-          "Help People Get Where They Need to Go. Be a Part of the Community."
+          &quot;Help People Get Where They Need to Go. Be a Part of the
+          Community.&quot;
         </Heading>
       </Box>
 
@@ -199,10 +134,10 @@ const DriverDashboard = () => {
           </Box>
         </Center>
       </Box>
-      {isOnline &&<RideRequest requests={sampleRequests} />
-}
+      {isOnline && <RideRequest requests={rideRequests} />}
     </Box>
   );
 };
 
-export default DriverDashboard;
+export default RideRequestsComponent;
+

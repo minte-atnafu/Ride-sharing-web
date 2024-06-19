@@ -20,9 +20,7 @@ import {
 function SearchBar() {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-
+  
   const handleSearch = () => {
     // Perform search logic here
   };
@@ -70,26 +68,7 @@ function SearchBar() {
           </Box>
         </FormControl>
 
-        <FormControl mb={4}>
-          <FormLabel htmlFor="date">Date</FormLabel>
-          <Input
-            id="date"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            mr={2}
-          />
-        </FormControl>
-        <FormControl mb={4}>
-          <FormLabel htmlFor="time">Preferred Commute Time</FormLabel>
-          <Input
-            id="time"
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            mr={2}
-          />
-        </FormControl>
+       
         <Button colorScheme="blue" onClick={handleSearch}>
           Search
         </Button>

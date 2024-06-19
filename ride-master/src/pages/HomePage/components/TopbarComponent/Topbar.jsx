@@ -51,9 +51,9 @@ function Topbar() {
             <li className="topListItem">
               <Link to={"/driver"}><Center><FaWheelchair size={20}/></Center><Text fontSize={10}>ሾፌር</Text></Link>
             </li>
-            <li className="topListItem">
+            {/* <li className="topListItem">
               <Link to={"/payment"}><Center><FaPaypal size={20}/></Center><Text fontSize={10}>ክፍያ</Text></Link>
-            </li>
+            </li> */}
             <li className="topListItem">
               <Link to={"/ride-request"}><Center> <FaCarSide size={20}/></Center><Text fontSize={10}>የራይድ አገልግሎት</Text></Link>
             </li>

@@ -58,9 +58,8 @@ app.post("/PassangerLoginPage", (req, res) => {
     });
 });
   
-//for driver registration
 app.post("/DriverRegisterPage", (req, res) => {
-  const { name, email, password, driver_license, license_plate, car_model, carYear, numberOfSite } = req.body;
+  const { name, email, password, driver_license, license_plate, car_model, carYear, numberOfSite, preferences } = req.body;
 
   // Insert into drivers table
   const sqlDrivers = "INSERT INTO drivers (name, email, password, driver_license) VALUES (?, ?, ?, ?)";
@@ -84,10 +83,22 @@ app.post("/DriverRegisterPage", (req, res) => {
         return res.status(500).json("Database error");
       }
 
-      return res.status(200).json("Driver registered successfully");
+      // Insert into preferences table
+      const sqlPreferences = "INSERT INTO preferences (driver_id, smoking, music, pet_friendly) VALUES (?, ?, ?, ?)";
+      const preferencesValues = [driver_id, preferences.smoking, preferences.music, preferences.pet_friendly];
+
+      db.query(sqlPreferences, preferencesValues, (err, result) => {
+        if (err) {
+          console.error("Error inserting into preferences table:", err);
+          return res.status(500).json("Database error");
+        }
+
+        return res.status(200).json("Driver registered successfully");
+      });
     });
   });
 });
+
 
 //for driver login
 app.post("/DriverLoginPage", (req, res) => {
@@ -106,6 +117,58 @@ app.post("/DriverLoginPage", (req, res) => {
     }
   });
 });
+// for preference issues
+app.post("DriverRegisterPage", (req, res) => {
+  const { driver_id, preference } = req.body;
+
+  // Delete existing preference for this driver
+  db.query("DELETE FROM preference WHERE driver_id = ?", [driverId], (err, result) => {
+    if (err) {
+      console.error("Error deleting existing preference:", err);
+      return res.status(500).json("Database error");
+    }
+
+    // Insert new preference into the database
+    const values = preference.map((preference) => [driverId, preference]);
+    db.query("INSERT INTO preference (driver_id, preference) VALUES ?", [values], (err, result) => {
+      if (err) {
+        console.error("Error inserting new preference:", err);
+        return res.status(500).json("Database error");
+      }
+      return res.status(200).json("Preference updated successfully");
+    });
+  });
+});
+
+
+//For Ride request from the dashboard
+// Endpoint to fetch ride requests
+app.get("/ride-request", (req, res) => {
+  const query =
+    "SELECT rr.user_id AS id, u.username AS passangerName, rr.s_address, rr.d_address, rr.no_site FROM riderequest rr JOIN users u ON rr.user_id = u.user_id;";
+
+  db.query(query, (error, results) => {
+    if (error) {
+      return res.status(500).json({ error: "Database query error" });
+    }
+    res.json(results);
+  });
+});
+
+//From database to ride history
+app.get("/ride-history", (req, res) => {
+  const query =
+    "SELECT rh.ride_id, rh.s_address, rh.d_address, u.username, ci.car_model AS car, p.amount AS fare, p.pay_method AS paymentMethod, rh.status, rh.travel_date FROM RideHistory rh INNER JOIN Users u ON rh.user_id = u.user_id INNER JOIN CarInfo ci ON rh.driver_id = ci.driver_id INNER JOIN Payment p ON rh.ride_id = p.ride_id;";
+
+  db.query(query, (error, results) => {
+    if (error) {
+      return res.status(500).json({ error: "Database query error" });
+    }
+    res.json(results);
+  });
+});
+// from the search
+
 
 
 app.listen(8081, () => {

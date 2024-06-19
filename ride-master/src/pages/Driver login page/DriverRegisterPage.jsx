@@ -1,22 +1,23 @@
 import {
   Box,
   Button,
+  Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Text,
+  HStack,
   Heading,
   Input,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import Setting from "../Driver App Page/components/Settings component/Setting";
 import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../HomePage/components/FooterComponent/Footer";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import {useNavigate,Link as ReactRouterLink } from "react-router-dom";
 
 function DriverRegisterPage() {
   const [name, setName] = useState("");
@@ -28,11 +29,16 @@ function DriverRegisterPage() {
   const [car_model, setcar_model] = useState("");
   const [carYear, setCarYear] = useState("");
   const [numberOfSite, setnumberOfSite] = useState("");
+  const [smoking, setSmoking] = useState(false);
+  const [music, setMusic] = useState(false);
+  const [petFriendly, setPetFriendly] = useState(false);
   const [errors, setErrors] = useState({});
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -63,21 +69,24 @@ function DriverRegisterPage() {
               name,
               email,
               password,
-              confirmPassword,
               driver_license,
               license_plate,
               car_model,
               carYear,
               numberOfSite,
+              preferences: {
+                smoking: smoking ? 'yes' : 'no',
+                music: music ? 'yes' : 'no',
+                pet_friendly: petFriendly ? 'yes' : 'no',
+              },
             }),
           }
         );
         const data = await response.json();
         // Handle registration success
         console.log(data);
-        navigate("/driver"); // Navigate to  driver page on success
-      }
-      catch (error) {
+        navigate("/driver"); // Navigate to driver page on success
+      } catch (error) {
         setErrors({ api: error.message });
       }
     }
@@ -243,9 +252,30 @@ function DriverRegisterPage() {
               <FormErrorMessage>{errors.carYear}</FormErrorMessage>
             </FormControl>
 
-              <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-                Sign Up
-              </Button>
+            <HStack spacing={8}>
+              <Checkbox
+                isChecked={smoking}
+                onChange={(e) => setSmoking(e.target.checked)}
+              >
+                Non-smoking
+              </Checkbox>
+              <Checkbox
+                isChecked={music}
+                onChange={(e) => setMusic(e.target.checked)}
+              >
+                No music
+              </Checkbox>
+              <Checkbox
+                isChecked={petFriendly}
+                onChange={(e) => setPetFriendly(e.target.checked)}
+              >
+                Pet-friendly
+              </Checkbox>
+            </HStack>
+
+            <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
+              Sign Up
+            </Button>
 
             {errors.api && (
               <Box color="red.500" mt={4}>
@@ -253,6 +283,12 @@ function DriverRegisterPage() {
               </Box>
             )}
           </form>
+          <Text mt={4} fontSize="sm" color="gray.600">
+            Already have an account?{" "}
+            <ReactRouterLink to={"/driver-login"} color="teal.500">
+              Login
+            </ReactRouterLink>
+          </Text>
         </Box>
       </Box>
 

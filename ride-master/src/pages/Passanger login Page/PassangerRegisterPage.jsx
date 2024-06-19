@@ -6,6 +6,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  Text,
   Input,
   InputGroup,
   InputRightElement,
@@ -13,7 +14,7 @@ import {
 import React, { useState } from "react";
 import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../HomePage/components/FooterComponent/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link as ReactRouterLink} from "react-router-dom";
 
 function PassangerRegisterPage() {
   const [name, setName] = useState("");
@@ -172,6 +173,12 @@ function PassangerRegisterPage() {
               Sign Up
             </Button>
           </form>
+          <Text mt={4} fontSize="sm" color="gray.600">
+            Already Have an account?{" "}
+          <ReactRouterLink to={"/passanger-login"} color="teal.500">
+            Login
+          </ReactRouterLink>
+        </Text>
         </Box>
       </Box>
 
