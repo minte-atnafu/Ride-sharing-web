@@ -21,12 +21,13 @@ function DriverRegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [driverLicense, setDriverLicense] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
   const [carModel, setCarModel] = useState("");
   const [carYear, setCarYear] = useState("");
+  const [numberOfSites, setNumberOfSites] = useState("");
+  const [errors, setErrors] = useState({});
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -34,27 +35,43 @@ function DriverRegisterPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Call API to register driver
-    try {
-      const response = await fetch("http://localhost:8081/DriverRegisterPage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          confirmPassword,
-          driverLicense,
-          licensePlate,
-          carModel,
-          carYear,
-        }),
-      });
-      const data = await response.json();
-      // Handle registration success
-      console.log(data);
-    } catch (error) {
-      setError(error.message);
+    let newErrors = {};
+    if (!name) newErrors.name = "Name is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+    if (password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match";
+    if (!driverLicense) newErrors.driverLicense = "Driver License Number is required";
+    if (!licensePlate) newErrors.licensePlate = "License Plate is required";
+    if (!carModel) newErrors.carModel = "Car Model is required";
+    if (!carYear) newErrors.carYear = "Car Year is required";
+    if (!numberOfSites) newErrors.numberOfSites = "Number of Sites is required";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      // Call API to register driver
+      try {
+        const response = await fetch("http://localhost:8081/DriverRegisterPage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            confirmPassword,
+            driverLicense,
+            licensePlate,
+            carModel,
+            carYear,
+            numberOfSites,
+          }),
+        });
+        const data = await response.json();
+        // Handle registration success
+        console.log(data);
+      } catch (error) {
+        setErrors({ api: error.message });
+      }
     }
   };
 
@@ -82,7 +99,7 @@ function DriverRegisterPage() {
             </Heading>
           </Flex>
           <form onSubmit={handleSubmit}>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.name}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Name
               </FormLabel>
@@ -94,9 +111,9 @@ function DriverRegisterPage() {
                 placeholder="Enter your name"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.name}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.email}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Email
               </FormLabel>
@@ -108,9 +125,9 @@ function DriverRegisterPage() {
                 placeholder="Enter your email"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.password}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Password
               </FormLabel>
@@ -129,6 +146,9 @@ function DriverRegisterPage() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.confirmPassword}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Confirm Your Password
               </FormLabel>
@@ -147,9 +167,9 @@ function DriverRegisterPage() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.confirmPassword}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.driverLicense}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Your Driver License Number
               </FormLabel>
@@ -160,9 +180,9 @@ function DriverRegisterPage() {
                 placeholder="Enter your driver license number"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.driverLicense}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.licensePlate}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 License Plate
               </FormLabel>
@@ -173,9 +193,9 @@ function DriverRegisterPage() {
                 placeholder="Enter your license plate"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.licensePlate}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.carModel}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Car Model
               </FormLabel>
@@ -186,9 +206,22 @@ function DriverRegisterPage() {
                 placeholder="Enter your car model"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.carModel}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={error}>
+            <FormControl isInvalid={errors.numberOfSites}>
+              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
+                Number of Sites
+              </FormLabel>
+              <Input
+                color={"blue.200"}
+                value={numberOfSites}
+                onChange={(event) => setNumberOfSites(event.target.value)}
+                placeholder="Enter number of sites"
+                _placeholder={{ opacity: 1, color: "gray.500" }}
+              />
+              <FormErrorMessage>{errors.numberOfSites}</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.carYear}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
                 Car Year
               </FormLabel>
@@ -199,14 +232,16 @@ function DriverRegisterPage() {
                 placeholder="Enter your car year"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <FormErrorMessage>{errors.carYear}</FormErrorMessage>
             </FormControl>
-            <Link to = {"/driver"}>
             <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
               Sign Up
             </Button>
-            </Link>
-
+            {errors.api && (
+              <Box color="red.500" mt={4}>
+                {errors.api}
+              </Box>
+            )}
           </form>
         </Box>
       </Box>
