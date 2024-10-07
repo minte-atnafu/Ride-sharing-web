@@ -40,7 +40,7 @@ const DriverLoginPage = () => {
 
         if (response.ok) {
           // Handle login success
-          console.log(data);
+          localStorage.setItem("token_id", data.token_id);
           navigate("/driver"); // Redirect to driver page
         } else {
           // Handle login failure
@@ -56,7 +56,7 @@ const DriverLoginPage = () => {
     <Box>
       <Topbar />
       <Box
-        bg="goldenrod"
+        bg="blueblack"
         minH="80vh"
         py={20}
         px={4}
@@ -68,13 +68,13 @@ const DriverLoginPage = () => {
       >
         <Flex justify="center" mb={4}>
           <Heading as="h1" size="lg" color="gray.600">
-            Driver Login
+          የአሽከርካሪ መግቢያ
           </Heading>
         </Flex>
         <form onSubmit={handleSubmit}>
           <FormControl isInvalid={!!errors.email}>
             <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-              Email
+              ኢሜል
             </FormLabel>
             <Input
               color={"blue.200"}
@@ -88,7 +88,7 @@ const DriverLoginPage = () => {
           </FormControl>
           <FormControl isInvalid={!!errors.password}>
             <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-              Password
+               የይለፍ ቃል
             </FormLabel>
             <Input
               color={"blue.200"}
@@ -108,13 +108,13 @@ const DriverLoginPage = () => {
           )}
 
           <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-            Login
+          ግባ
           </Button>
         </form>
         <Text mt={4} fontSize="sm" color="gray.600">
-          Don't have an account?{" "}
+           አካውንት የለህም?{" "}
           <Link to={"/driver-register"} color="teal.500">
-            Register now
+          አሁን ተመዝገብ
           </Link>
         </Text>
       </Box>

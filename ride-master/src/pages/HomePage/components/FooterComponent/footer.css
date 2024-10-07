@@ -1,112 +1,116 @@
 footer {
-    background-color: #373434;
-    color: #fff;
-    padding: 2rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  footer .container {
-    max-width: 120rem;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  footer .logo {
-    margin-bottom: 0;
-  }
-  
-  footer nav {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-    margin-bottom: 0;
-    flex-direction: column;
-  }
-  
-  footer nav a {
-    display: block;
-    padding: 0.5rem 1rem;
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  footer nav a:hover {
-    background-color: #444;
-  }
-  
-  footer .social-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  footer .social-links li {
-    margin: 0 0.5rem;
-  }
-  
-  footer .social-links a {
-    display: block;
-    width: 3rem;
-    height: 3rem;
-    line-height: 3rem;
-    color: #fff;
-    border-radius: 50%;
-    text-align: center;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  footer .social-links a:hover {
-    background-color: #444;
-  }
-  
-  footer .copyright {
-    margin: 1.5rem 0;
-    text-align: center;
-  }
-  
-  @media (max-width: 768px) {
-    footer {
+  background-color: #2C2C2C; /* Dark gray for a modern look */
+  color: #E0E0E0; /* Light gray for text contrast */
+  padding: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer .container {
+  max-width: 120rem;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer .logo {
+  margin-bottom: 0;
+}
+
+footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+  flex-direction: column;
+}
+
+footer nav a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #E0E0E0; /* Consistent light gray */
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+footer nav a:hover {
+  background-color: #444; /* Slightly lighter gray for hover effect */
+}
+
+footer .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer .social-links li {
+  margin: 0 0.5rem;
+}
+
+footer .social-links a {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
+  color: #E0E0E0; /* Consistent light gray */
+  border-radius: 50%;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+
+footer .social-links a:hover {
+  background-color: #565656; /* Medium gray for hover effect */
+}
+
+footer .copyright {
+  margin: 1.5rem 0;
+  text-align: center;
+  color: #AAAAAA; /* Light gray for a softer look */
+}
+
+@media (max-width: 768px) {
+  footer {
       flex-direction: column;
-    }
-  
-    footer .container {
-      flex-direction: column;
-      
-    }
-  
-    footer nav,
-    footer .social-links {
-      flex-direction: column;
-      
-    }
-  
-    footer nav a,
-    footer .social-links a {
-      margin-bottom: 0.5rem;
-    }
-  }
-  footer h2{
-    padding: 30px;
-  }
-  .footerContainer{
-    width: 100%;
-    border-radius: 10px;
   }
 
-.contactLink{
+  footer .container {
+      flex-direction: column;
+  }
+
+  footer nav,
+  footer .social-links {
+      flex-direction: column;
+  }
+
+  footer nav a,
+  footer .social-links a {
+      margin-bottom: 0.5rem;
+  }
+}
+
+footer h2 {
+  padding: 30px;
+  color: #F0C040; /* Gold color for section titles */
+}
+
+.footerContainer {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #3A3A3A; /* Slightly lighter background for contrast */
+}
+
+.contactLink {
   display: flex;
- align-items: center;
- justify-content: space-evenly;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #E0E0E0; /* Consistent light gray */
 }

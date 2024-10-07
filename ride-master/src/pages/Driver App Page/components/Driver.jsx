@@ -1,6 +1,5 @@
 import Dashboard from "./Dashboard Component/Dashboard";
 
-import Settings from "./Settings component/Setting";
 import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
 import Footer from "../../HomePage/components/FooterComponent/Footer";
 import RideHistory from "../../Account Page/components/Ride History Component/RideHistory"
@@ -18,7 +17,7 @@ function Driver() {
     <>
     <Topbar   />
       <Dashboard />
-      <Settings />
+      {/* <Settings /> */}
       <RideHistory/>
       <Footer />
     </>

@@ -13,6 +13,7 @@ import { useState } from "react";
 import Topbar from "../HomePage/components/TopbarComponent/Topbar";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../HomePage/components/FooterComponent/Footer";
+import HomeTopbar from "../HomePage/components/TopbarComponent/HomeTopbar";
 
 const PassangerLoginPage = () => {
   const [email, setEmail] = useState("");
@@ -31,7 +32,7 @@ const PassangerLoginPage = () => {
     if (Object.keys(errors).length === 0) {
       // Call API to login passenger
       try {
-        const response = await fetch("http://localhost:8081/Passanger", {
+        const response = await fetch("http://localhost:8081/PassengerLoginPage", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
@@ -39,14 +40,13 @@ const PassangerLoginPage = () => {
         const data = await response.json();
 
         if (response.ok) {
-          // Handle login success
-          console.log(data);
-          navigate("/ride-request"); // Redirect to ride request page
+          localStorage.setItem("token_id", data.token_id);
+          navigate("/ride-request");
         } else {
-          // Handle login failure
           setErrors({ server: data.message });
         }
-      } catch (error) {
+      }
+        catch (error) {
         setErrors({ server: error.message });
       }
     }
@@ -54,9 +54,9 @@ const PassangerLoginPage = () => {
 
   return (
     <Box>
-      <Topbar />
+      <HomeTopbar />
       <Box
-        bg="goldenrod"
+        bg="blueblack"
         minH="80vh"
         py={20}
         px={4}
@@ -68,13 +68,13 @@ const PassangerLoginPage = () => {
       >
         <Flex justify="center" mb={4}>
           <Heading as="h1" size="lg" color="gray.600">
-            User Login
+          የተጠቃሚ መግቢያ
           </Heading>
         </Flex>
         <form onSubmit={handleSubmit}>
           <FormControl isInvalid={!!errors.email}>
             <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-              Email
+              ኢሜል
             </FormLabel>
             <Input
               color={"blue.200"}
@@ -88,8 +88,7 @@ const PassangerLoginPage = () => {
           </FormControl>
           <FormControl isInvalid={!!errors.password}>
             <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-              Password
-            </FormLabel>
+            የይለፍ ቃል            </FormLabel>
             <Input
               color={"blue.200"}
               type="password"
@@ -106,13 +105,13 @@ const PassangerLoginPage = () => {
             </Box>
           )}
           <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-            Login
+            ግባ
           </Button>
         </form>
         <Text mt={4} fontSize="sm" color="gray.600">
-          Don't have an account?{" "}
+          አካውንት የለህም?{" "}
           <Link to={"/passanger-register"} color="teal.500">
-            Register now
+            አሁን ተመዝገብ
           </Link>
         </Text>
       </Box>

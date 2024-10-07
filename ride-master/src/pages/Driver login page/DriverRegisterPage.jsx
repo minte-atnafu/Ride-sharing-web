@@ -84,7 +84,7 @@ function DriverRegisterPage() {
         );
         const data = await response.json();
         // Handle registration success
-        console.log(data);
+        localStorage.setItem("token_id", data.token_id);
         navigate("/driver"); // Navigate to driver page on success
       } catch (error) {
         setErrors({ api: error.message });
@@ -100,7 +100,7 @@ function DriverRegisterPage() {
 
       <Box>
         <Box
-          bg="goldenrod"
+          bg="blueblack"
           minH="80vh"
           py={20}
           px={4}
@@ -111,42 +111,42 @@ function DriverRegisterPage() {
           marginTop={50}
         >
           <Flex justify="center" mb={4}>
-            <Heading as="h1" size="lg" color="gray.600">
-              Driver Register
+            <Heading as="h1" size="lg" color="gray.800">
+            የአሽከርካሪ መግቢያ
             </Heading>
           </Flex>
           <form onSubmit={handleSubmit}>
             <FormControl isInvalid={errors.name}>
-              <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Name
+              <FormLabel color={"gray.800"} fontWeight={"bolder"}>
+                ስም
               </FormLabel>
               <Input
                 color={"blue.200"}
                 type="text"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                placeholder="Enter your name"
+                placeholder="ስምዎን ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.name}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.email}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Email
+                ኢሜል
               </FormLabel>
               <Input
                 color={"blue.200"}
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="Enter your email"
+                placeholder="ኢሜል ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.email}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.password}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Password
+              የይለፍ ቃል
               </FormLabel>
               <InputGroup size="md">
                 <Input
@@ -154,12 +154,12 @@ function DriverRegisterPage() {
                   type={show ? "text" : "password"}
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Enter your password"
+                  placeholder="የይልፍ ቃልዎን ያስገቡ"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
+                    {show ? "ደብቅ" : "አሳይ"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -167,7 +167,7 @@ function DriverRegisterPage() {
             </FormControl>
             <FormControl isInvalid={errors.confirmPassword}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Confirm Your Password
+              የይለፍ ቃልዎን ያረጋግጡ
               </FormLabel>
               <InputGroup size="md">
                 <Input
@@ -175,12 +175,12 @@ function DriverRegisterPage() {
                   type={show ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
-                  placeholder="Re-enter your password"
+                  placeholder="የይልፍ ቃልዎን ያስገቡ"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
+                    {show ? "ደብቅ" : "አሳይ"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -188,65 +188,62 @@ function DriverRegisterPage() {
             </FormControl>
             <FormControl isInvalid={errors.driver_license}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Your Driver License Number
+                የመንጃ ፍቃድ ቁጥርህ
               </FormLabel>
               <Input
                 color={"blue.200"}
                 value={driver_license}
                 onChange={(event) => setdriver_license(event.target.value)}
-                placeholder="Enter your driver license number"
+                placeholder="የመንጃ ፍቃድ ቁጥርዎን ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.driverLicense}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.license_plate}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                License Plate
+                ታርጋ ቁጥር
               </FormLabel>
               <Input
                 color={"blue.200"}
                 value={license_plate}
                 onChange={(event) => setlicense_plate(event.target.value)}
-                placeholder="Enter your license plate"
+                placeholder="የታርጋ ቁጥርዎን ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.licensePlate}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.car_model}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Car Model
-              </FormLabel>
+              የመኪና ሞዴል              </FormLabel>
               <Input
                 color={"blue.200"}
                 value={car_model}
                 onChange={(event) => setcar_model(event.target.value)}
-                placeholder="Enter your car model"
+                placeholder="የመኪናዎን ሞዴል ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.car_model}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.numberOfSite}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Number of Sites
-              </FormLabel>
+              የወንበር ብዛት              </FormLabel>
               <Input
                 color={"blue.200"}
                 value={numberOfSite}
                 onChange={(event) => setnumberOfSite(event.target.value)}
-                placeholder="Enter number of sites"
+                placeholder="የወንበር ብዛት ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.numberOfSite}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.carYear}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Car Year
-              </FormLabel>
+              የመኪና ዓመት              </FormLabel>
               <Input
                 color={"blue.200"}
                 value={carYear}
                 onChange={(event) => setCarYear(event.target.value)}
-                placeholder="Enter your car year"
+                placeholder="የተመረተበትን አመት ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{errors.carYear}</FormErrorMessage>
@@ -257,25 +254,21 @@ function DriverRegisterPage() {
                 isChecked={smoking}
                 onChange={(e) => setSmoking(e.target.checked)}
               >
-                Non-smoking
-              </Checkbox>
+                    አለማጨስ              </Checkbox>
               <Checkbox
                 isChecked={music}
                 onChange={(e) => setMusic(e.target.checked)}
               >
-                No music
-              </Checkbox>
+                        ሙዚቃ የለም              </Checkbox>
               <Checkbox
                 isChecked={petFriendly}
                 onChange={(e) => setPetFriendly(e.target.checked)}
               >
-                Pet-friendly
-              </Checkbox>
+                      ለቤት እንስሳት ተስማሚ              </Checkbox>
             </HStack>
 
             <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-              Sign Up
-            </Button>
+            ተመዝገብ            </Button>
 
             {errors.api && (
               <Box color="red.500" mt={4}>
@@ -284,9 +277,9 @@ function DriverRegisterPage() {
             )}
           </form>
           <Text mt={4} fontSize="sm" color="gray.600">
-            Already have an account?{" "}
+          አካውንት የለህም?{" "}
             <ReactRouterLink to={"/driver-login"} color="teal.500">
-              Login
+              ግባ
             </ReactRouterLink>
           </Text>
         </Box>

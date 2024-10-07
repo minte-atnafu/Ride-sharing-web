@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Flex,
@@ -13,24 +14,57 @@ import {
   HStack,
   Select,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const RideRequests = ({ requests }) => {
+const RideRequests = () => {
   const bgColor = useColorModeValue("gray.100", "gray.700");
   const [filters, setFilters] = useState({
     s_address: "",
     d_address: "",
     no_site: "",
   });
+  const [requests, setRideRequests] = useState([]);
+  const fetchRideRequests = async () => {
+    try {
+      const response = await fetch("http://localhost:8081/ride-request");
+      if (!response.ok) {
+        throw new Error("Failed to fetch ride requests");
+      }
+      const data = await response.json();
+      setRideRequests(data);
+    } catch (error) {
+      console.error("Error fetching ride requests:", error);
+    }
+  };
 
-  // const handleAccept = (requestId) => {
-  //   // handle accepting the request
-  // };
+  useEffect(() => {
+    fetchRideRequests();
+  }, []);
+  const handleStatus = async ( status) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8081/ride-requests-deletes",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ requestId: requestId, status: status, token_id: localStorage.getItem("token_id") }),
+        }
+      );
 
-  // const handleDecline = (requestId) => {
-  //   // handle declining the request
-  // };
+      if (!response.ok) {
+        throw new Error("Failed to delete ride request");
+      }
+
+      // Fetch the updated data and set it as the new value for 'requests'
+      fetchRideRequests();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleFilterChange = (filter, value) => {
     setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
   };
@@ -41,8 +75,6 @@ const RideRequests = ({ requests }) => {
     if (filters.s_address && request.s_address !== filters.s_address)
       return false;
     if (filters.d_address && request.d_address !== filters.d_address)
-      return false;
-    if (filters.EstimatedFare && request.estimatedFare < filters.EstimatedFare)
       return false;
     return true;
   });
@@ -110,6 +142,7 @@ const RideRequests = ({ requests }) => {
               <option value="5">5</option>
             </Select>
 
+
             <Select
               value={filters.d_address}
               onChange={(e) => handleFilterChange("d_address", e.target.value)}
@@ -125,7 +158,6 @@ const RideRequests = ({ requests }) => {
           </HStack>
         </VStack>
       </Box>
-
 
       {filteredRideRequest && (
         <List spacing={4}>
@@ -161,7 +193,7 @@ const RideRequests = ({ requests }) => {
                     size="sm"
                     mr={2}
                     // eslint-disable-next-line no-undef
-                    onClick={() => handleAccept(request.id)}
+                    onClick={() => handleStatus("accepted")}
                   >
                     Accept
                   </Button>
@@ -170,7 +202,7 @@ const RideRequests = ({ requests }) => {
                     variant="solid"
                     size="sm"
                     // eslint-disable-next-line no-undef
-                    onClick={() => handleDecline(request.id)}
+                    onClick={() => handleStatus( "declined")}
                   >
                     Decline
                   </Button>

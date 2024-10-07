@@ -21,7 +21,7 @@ const RideHistory = () => {
   useEffect(() => {
     const fetchRideHistory = async () => {
       try {
-        const response = await fetch("http://localhost:3000/ride-history");
+        const response = await fetch("http://localhost:8081/ride-history");
         if (!response.ok) {
           throw new Error("Failed to fetch ride history");
         }

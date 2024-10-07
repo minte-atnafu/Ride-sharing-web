@@ -13,110 +13,109 @@ function Footer() {
       <div className="container">
         <div>
           <div>
-            <h2 className="title-font">CATEGORIES</h2>
+            <h2 className="title-font">SERVICES</h2>
             <nav>
               <li>
-                <a>First Link</a>
+                <a href="#">Ride Booking</a>
               </li>
               <li>
-                <a>Second Link</a>
+                <a href="#">Corporate Travel</a>
               </li>
               <li>
-                <a>Third Link</a>
+                <a href="#">Airport Transfers</a>
               </li>
               <li>
-                <a>Fourth Link</a>
+                <a href="#">Luxury Cars</a>
               </li>
             </nav>
           </div>
         </div>
         <div>
           <div>
-            <h2>CATEGORIES</h2>
+            <h2 className="title-font">ABOUT US</h2>
             <nav>
               <li>
-                <a>First Link</a>
+                <a href="#">Company</a>
               </li>
               <li>
-                <a>Second Link</a>
+                <a href="#">Team</a>
               </li>
               <li>
-                <a>Third Link</a>
+                <a href="#">Careers</a>
               </li>
               <li>
-                <a>Fourth Link</a>
+                <a href="#">Blog</a>
               </li>
             </nav>
           </div>
-        </div>
+        </div> 
         <div>
           <div>
-            <h2>CATEGORIES</h2>
+            <h2 className="title-font">SUPPORT</h2>
             <nav>
               <li>
-                <a>First Link</a>
+                <a href="#">Help Center</a>
               </li>
               <li>
-                <a>Second Link</a>
+                <a href="#">Safety Tips</a>
               </li>
               <li>
-                <a>Third Link</a>
+                <a href="#">FAQs</a>
               </li>
               <li>
-                <a>Fourth Link</a>
+                <a href="#">Contact Support</a>
               </li>
             </nav>
           </div>
-        </div>
-        <div>
+        </div> 
+        <div> 
           <div className="contactContainer">
-            <h2>CONTACT</h2>
+            <h2 className="title-font">CONTACT</h2>
             <nav>
               <li>
-                <a className="contactLink">
-                  <FaPhoneAlt /> your contact
+                <a href="tel:your-contact" className="contactLink">
+                  <FaPhoneAlt /> +1 (555) 123-4567
                 </a>
               </li>
               <li>
-                <a className="contactLink">
+                <a href="mailto:youremail@example.com" className="contactLink">
                   <FaEnvelope />
-                  your email.com
+                  support@rideprovider.com
                 </a>
               </li>
               <li>
-                <a className="contactLink">
+                <a href="https://twitter.com/yourtwitter" className="contactLink">
                   <FaTwitter />
-                  your twitter.com
+                  @RideProvider
                 </a>
               </li>
               <li>
-                <a className="contactLink">
+                <a href="https://www.instagram.com/mintesinotatnafu/" className="contactLink">
                   <FaInstagram />
-                  instagram.com
+                  instagram.com/RideProvider
                 </a>
               </li>
               <li>
-                <a className="contactLink">
+                <a href="https://facebook.com/yourfacebook" className="contactLink">
                   <FaFacebookF />
-                  youremail.com
+                  facebook.com/RideProvider
                 </a>
               </li>
             </nav>
           </div>
         </div>
       </div>
-      <div className="container ">
+      <div className="container">
         <p>
-          © 2023 Tourism Management System —
+          © 2024 RideProvider —
           <a
             href="https://www.linkedin.com/in/your-linkedin-profile/"
             rel="noopener noreferrer"
             target="_blank"
           >
-            @YourName
+            @YourLinkedIn
           </a>
         </p>
-        
       </div>
     </footer>
   );

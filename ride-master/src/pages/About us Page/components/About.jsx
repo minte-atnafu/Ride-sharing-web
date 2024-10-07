@@ -2,7 +2,7 @@ import "./about.css"
 import Mission from "./Mission Component/Mission"
 import Team from "./Team Introduction Component/Team"
 import Company from "./Company story Compnent/Story" 
-import Topbar from "../../HomePage/components/TopbarComponent/Topbar"
+import Topbar from "../../HomePage/components/TopbarComponent/HomeTopbar"
 import Footer from "../../HomePage/components/FooterComponent/Footer"
 
 
@@ -12,8 +12,8 @@ function About() {
     <Topbar/>
     <Mission/>
     <Team/>
-    <Company/>
-    <Footer/>
+   <Company/>
+    <Footer/> 
 
     </>
   )

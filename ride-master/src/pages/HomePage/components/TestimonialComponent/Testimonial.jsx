@@ -13,18 +13,26 @@ import {
 const testimonials = [
   {
     id: 1,
-    title: "ዮሃንስ ሶፍያ",
+    title: "ዶ/ር ዘበነ ለማ",
     description:
-      "ምቹ ትራንስፖርት ነበር በጣም ደስ ብሎኛል።  በጊዜ ወደ ስራየ ተመልሻለሁ እንዴት እንደሚሆን እንደሚረዳ ",
-    image: "https://www.youtube.com/embed/mW5qMibFN80",
+      "ምቹ ትራንስፖርት ነበር በጣም ደስ ብሎኛል።  በጊዜ ለቅዳሴ እድደርስ አርጎኛል እግዚያብሄር ይስጥልኝ። ",
+    image: "src/assets/zebene.jpg",
     price: "450 ብር",
   },
   {
     id: 2,
-    title: "ማርቆን ሶፍያ",
+    title: "ሃጂ ሙፍቲ",
     description:
-      "This table is perfect for modern, minimalist spaces. It's made of solid oak and features a sleek, clean design.",
-    image: "https://via.placeholder.com/560x315",
+      "መስተንግዷቹ በጣም መልካም ነበር፤ አላምዱሊላሂ ለሶላት በጊዜ ደርሻለው።",
+    image: "src/assets/haji.jpg",
+    price: "650 ብር",
+  },
+  {
+    id: 3,
+    title: "ፓስተር ቸሬ",
+    description:
+      "on time ናቹ፤ ስራቹን በጣም appriciate ማድረግ ፈልጋለው።",
+    image: "src/assets/chere.jpg",
     price: "650 ብር",
   },
 ];
@@ -55,13 +63,13 @@ function Testimonial() {
             <AspectRatio maxW="560px" ratio={1}>
               <iframe
                 title="naruto"
-                src={testimonials[0].image}
+                src={testimonials[1].image}
                 allowFullScreen
               />
             </AspectRatio>
             <Stack mt="6" spacing="3">
-              <Heading size="md">{testimonials[0].title}</Heading>
-              <Text>{testimonials[0].description}</Text>
+              <Heading size="md">{testimonials[1].title}</Heading>
+              <Text>{testimonials[1].description}</Text>
             </Stack>
           </CardBody>
           <Divider />
@@ -72,13 +80,13 @@ function Testimonial() {
             <AspectRatio maxW="560px" ratio={1}>
               <iframe
                 title="naruto"
-                src={testimonials[0].image}
+                src={testimonials[2].image}
                 allowFullScreen
               />
             </AspectRatio>
             <Stack mt="6" spacing="3">
-              <Heading size="md">{testimonials[0].t}</Heading>
-              <Text>{testimonials[0].description}</Text>
+              <Heading size="md">{testimonials[2].title}</Heading>
+              <Text>{testimonials[2].description}</Text>
             </Stack>
           </CardBody>
           <Divider />

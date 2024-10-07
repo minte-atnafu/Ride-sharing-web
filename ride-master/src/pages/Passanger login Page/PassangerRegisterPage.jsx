@@ -50,8 +50,8 @@ function PassangerRegisterPage() {
         });
         const data = await response.json();
         // Handle registration success
-        console.log(data);
-        navigate("/account"); // Navigate to account page on success
+        localStorage.setItem("token_id", data.token_id);
+        navigate("/ride-request"); // Navigate to account page on success
       } catch (error) {
         setError({ server: error.message });
       }
@@ -78,41 +78,41 @@ function PassangerRegisterPage() {
         >
           <Flex justify="center" mb={4}>
             <Heading as="h1" size="lg" color="gray.600">
-              Passenger Register
+            የተጠቃሚ መግቢያ
             </Heading>
           </Flex>
           <form onSubmit={handleSubmit}>
             <FormControl isInvalid={error.name}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Name
+                ስም 
               </FormLabel>
               <Input
                 color={"blue.200"}
                 type="text"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                placeholder="Enter your name"
+                placeholder="ስምዎትን አስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{error.name}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={error.email}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Email
+                ኢሜል
               </FormLabel>
               <Input
                 color={"blue.200"}
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="Enter your email"
+                placeholder="ኤሜልህን አስገባ "
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{error.email}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={error.password}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Password
+                የይለፍ ቃል
               </FormLabel>
               <InputGroup size="md">
                 <Input
@@ -120,12 +120,12 @@ function PassangerRegisterPage() {
                   type={show ? "text" : "password"}
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Enter your password"
+                  placeholder="የይለፍ ቃል አስገባ"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
+                    {show ? "ደብቅ" : "አሳይ"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -133,7 +133,7 @@ function PassangerRegisterPage() {
             </FormControl>
             <FormControl isInvalid={error.confirmPassword}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Confirm Password
+              የይለፍ ቃልዎን ያረጋግጡ
               </FormLabel>
               <InputGroup size="md">
                 <Input
@@ -141,12 +141,12 @@ function PassangerRegisterPage() {
                   type={show ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
-                  placeholder="Re-Enter your password"
+                  placeholder="የይለፍ ቃልዎን ደግመው ያስገቡ"
                   _placeholder={{ opacity: 1, color: "gray.500" }}
                 />
                 <InputRightElement width="4.5rem">
                   <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    {show ? "Hide" : "Show"}
+                    {show ? "ደብቅ" : "አሳይ"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -154,14 +154,14 @@ function PassangerRegisterPage() {
             </FormControl>
             <FormControl isInvalid={error.phoneNumber}>
               <FormLabel color={"gray.500"} fontWeight={"bolder"}>
-                Phone Number
+                ስልክ ቁጥር
               </FormLabel>
               <Input
                 color={"blue.200"}
                 type="tel"
                 value={phoneNumber}
                 onChange={(event) => setPhoneNumber(event.target.value)}
-                placeholder="Enter your phone number"
+                placeholder="ስልክ ቁጥርዎን ያስገቡ"
                 _placeholder={{ opacity: 1, color: "gray.500" }}
               />
               <FormErrorMessage>{error.phoneNumber}</FormErrorMessage>
@@ -170,13 +170,13 @@ function PassangerRegisterPage() {
               <FormErrorMessage>{error.server}</FormErrorMessage>
             </FormControl>
             <Button type="submit" colorScheme="teal" w={"full"} mt={4}>
-              Sign Up
+              ተመዝገብ
             </Button>
           </form>
           <Text mt={4} fontSize="sm" color="gray.600">
-            Already Have an account?{" "}
+            አካውንት አለህን?{" "}
           <ReactRouterLink to={"/passanger-login"} color="teal.500">
-            Login
+            ግባ
           </ReactRouterLink>
         </Text>
         </Box>

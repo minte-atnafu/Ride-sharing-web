@@ -3,443 +3,352 @@ import {
   Flex,
   Grid,
   GridItem,
-  Heading,
   Text,
   Button,
   Select,
   Checkbox,
-  CheckboxGroup,
   VStack,
   HStack,
-  Avatar,
   Badge,
-  grid,
   SimpleGrid,
   useBreakpointValue,
-  Img,
   Spacer,
+  FormControl, // Add this line
+  FormLabel, // Add this line
+  Input, // Add this line
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  FaCampground,
   FaCar,
   FaChair,
-  FaClock,
-  FaDollarSign,
-  FaLandmark,
   FaRoad,
-  FaTimes,
-  FaUserTimes,
+  FaMapMarker,
+  FaLandmark,
 } from "react-icons/fa";
 import Confirmation from "../Confirmation Component/Confirmation";
 
 const RideListing = () => {
   const [select, setSelect] = useState(false);
   const [filters, setFilters] = useState({
-    numSeats: "",
-    carType: "",
-    driverPrefs: [],
+    s_address: "",
+    d_address: "",
+    numberOfSite: "",
+    car_model: "",
+    smooking: "No",
+    music: "No",
+    pet: "No",
   });
 
-  const [rideListings, setRideListings] = useState([
-    // sample ride listing data
-    {
-      id: 1,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
+  const [rideListings, setRideListings] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8081/ride-listings")
+      .then((res) => res.json())
+      .then((data) => setRideListings(data))
+      .catch((err) => console.error(err));
+  }, []);
 
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 2,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 3,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 4,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 5,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 6,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 7,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 8,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 9,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 10,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 11,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    {
-      id: 12,
-      driver: {
-        name: "John Doe",
-        profilePicture: "https://example.com/johndoe.jpg",
-        rating: 4.5,
-      },
-      origin: "New York",
-      destination: "Los Angeles",
-      travelTime: "4 hours",
-      cost: " $50.00",
-      numSeats: 4,
-      vehicle: "Toyota Camry",
-      carPhoto:
-        "https://github.com/bantie8989/ride/blob/d69b20ed9bd4ae6d7eb43518e340498d7e4a00fc/src/assets/bacground.jpg",
-      carType: "Fuel-efficient",
-      driverPrefs: ["Non-smoking", "No music"],
-    },
-    // ...
-  ]);
-
-  const handleclick = () => {
+ /* const handleclick = () => {
     setSelect(!select);
+  };*/
+  const handleclick = async(ride) => {
+    // Assuming you have the user_id available in your frontend state or context
+    const user_id = localStorage.getItem("token_id"); // Replace getUserId() with the function to get the user_id
+
+    const rideDetails = {
+      user_id: user_id,
+      s_address: ride.s_address,
+      d_address: ride.d_address,
+      numberOfSite: ride.numberOfSite,
+    };
+     await fetch("http://localhost:8081/createRideRequest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`, // Include token in the request
+      },
+      body: JSON.stringify(rideDetails),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        // Handle successful response from the server, for example, show a confirmation message
+        setSelect(true); // Optionally, setSelect(true) to show the confirmation component
+      })
+      .catch((error) => {
+        console.error("There was a problem with the request:", error);
+        // Handle error
+      });
   };
 
   const handleFilterChange = (filter, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filter]: value,
+    }));
   };
 
   const filteredRideListings = rideListings.filter((ride) => {
-    if (filters.numSeats && ride.numSeats < filters.numSeats) return false;
-    if (filters.carType && ride.carType !== filters.carType) return false;
-    if (filters.driverPrefs.length > 0) {
-      const matchingPrefs = ride.driverPrefs.filter((pref) =>
-        filters.driverPrefs.includes(pref)
-      );
-      if (matchingPrefs.length !== filters.driverPrefs.length) return false;
-    }
+    if (filters.s_address && ride.s_address !== filters.s_address) return false;
+    if (filters.d_address && ride.d_address !== filters.d_address) return false;
+    if (filters.numberOfSite && ride.numberOfSite < filters.numberOfSite) return false;
+    if (filters.car_model && ride.car_model !== filters.car_model) return false;
+    if (filters.smooking !== "No" && ride.smoking !== filters.smooking)
+      return false;
+    if (filters.music !== "No" && ride.music !== filters.music) return false;
+    if (filters.pet !== "No" && ride.pet_friendly !== filters.pet) return false;
     return true;
   });
 
   const columnCount = useBreakpointValue({ base: 1, md: 2, lg: 3 });
 
   return (
-    <Box w={"100%"} p={10}>
-      {/* Filter section */}
-      <VStack mb={4}>
-        <Text
-          fontSize={20}
-          mb={12}
-          p={5}
-          color={"black"}
-          backgroundColor={"goldenrod"}
-          w={"100%"}
-          fontWeight={"bold"}
-          textAlign={"center"}
-          fontStyle={"initial"}
-          borderRadius={10}
-        >
-          Filter by
-        </Text>
-        <Spacer />
-        <HStack spacing={24}>
-          <Select
-            value={filters.numSeats}
-            onChange={(e) => handleFilterChange("numSeats", e.target.value)}
-            placeholder="Number of seats"
-            backgroundColor={"blue.300"}
+    <>
+      <Box w={"70%"} ml={"25%"} p={20}>
+        <Box>
+          <FormControl mb={4}>
+            <FormLabel htmlFor="origin">Origin</FormLabel>
+            <Box display="flex" alignItems="center">
+              <FaMapMarker size={50} />
+              <Input
+                id="origin"
+                type="text"
+                placeholder="Enter origin address"
+                mr={6}
+                flexGrow={1}
+                ml={6}
+              />
+            </Box>
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel htmlFor="destination">Destination</FormLabel>
+            <Box display={"flex"} alignItems={"center"}>
+              <FaLandmark size={50} />
+              <Input
+                id="destination"
+                type="text"
+                placeholder="Enter destination address"
+                mr={2}
+                ml={5}
+              />{" "}
+            </Box>
+          </FormControl>
+          <Button
+            colorScheme="blue"
+            onClick={() => {
+              handleFilterChange(
+                "s_address",
+                document.getElementById("origin").value
+              );
+              handleFilterChange(
+                "d_address",
+                document.getElementById("destination").value
+              );
+            }}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </Select>
-          <Select
-            value={filters.carType}
-            onChange={(e) => handleFilterChange("carType", e.target.value)}
-            placeholder="Car type"
-            backgroundColor={"blue.300"}
+            Search
+          </Button>
+        </Box>
+      </Box>
+      <Box w={"100%"} p={10}>
+        {/* Filter section */}
+        <VStack mb={4}>
+          <Text
+            fontSize={20}
+            mb={12}
+            p={5}
+            color={"black"}
+            backgroundColor={"goldenrod"}
+            w={"100%"}
+            fontWeight={"bold"}
+            textAlign={"center"}
+            fontStyle={"initial"}
+            borderRadius={10}
           >
-            <option value="Fuel-efficient">Fuel-efficient</option>
-            <option value="Luxury">Luxury</option>
-            <option value="Eco-friendly">Eco-friendly</option>
-          </Select>
-          <CheckboxGroup
-            value={filters.driverPrefs}
-            onChange={(values) => handleFilterChange("driverPrefs", values)}
-          >
+            Filter by
+          </Text>
+          <Spacer />
+          <HStack spacing={24}>
+            <Select
+              value={filters.numSeats}
+              onChange={(e) => handleFilterChange("numberOfSite", e.target.value)}
+              placeholder="Number of seats"
+              backgroundColor={"blue.300"}
+            >
+
+<option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </Select>
+            <Select
+              value={filters.carType}
+              onChange={(e) => handleFilterChange("car_model", e.target.value)}
+              placeholder="Car Model"
+              backgroundColor={"blue.300"}
+            >
+              <option value="Toyota Prius">Toyota Prius</option>
+              <option value="Honda Accord">Honda Accord</option>
+              <option value="Ford Focus">Ford Focus</option>
+            </Select>
             <HStack spacing={8}>
-              <Checkbox value="Non-smoking">Non-smoking</Checkbox>
-              <Checkbox value="No music">No music</Checkbox>
-              <Checkbox value="Pet-friendly">Pet-friendly</Checkbox>
+              <Checkbox
+                value={filters.smooking === "Yes" ? "Yes" : "No"}
+                onChange={(e) =>
+                  handleFilterChange(
+                    "smooking",
+                    e.target.value === "Yes" ? "No" : "Yes"
+                  )
+                }
+              >
+                Smoking
+              </Checkbox>
+              <Checkbox
+                value={filters.music === "Yes" ? "Yes" : "No"}
+                onChange={(e) =>
+                  handleFilterChange(
+                    "music",
+                    e.target.value === "Yes" ? "No" : "Yes"
+                  )
+                }
+              >
+                Music
+              </Checkbox>
+              <Checkbox
+                value={filters.pet === "Yes" ? "Yes" : "No"}
+                onChange={(e) =>
+                  handleFilterChange(
+                    "pet",
+                    e.target.value === "Yes" ? "No" : "Yes"
+                  )
+                }
+              >
+                Pet-friendly
+              </Checkbox>
             </HStack>
-          </CheckboxGroup>
-        </HStack>
-      </VStack>
+          </HStack>
+        </VStack>
 
-      {/* Ride listings section */}
-      {select && <Confirmation />}
+        {/* Ride listings section */}
+        {select && <Confirmation />}
 
-      <SimpleGrid columns={columnCount} spacing={18} mt={10}>
-        {filteredRideListings.map((ride, index) => (
-          <Grid templateColumns="repeat(1, 1fr)" gap={14} key={index}>
-            <GridItem key={ride.id} p={10}>
-              <Flex
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                mb={2}
-              >
-                <Avatar src={ride.driver.profilePicture} size="sm" />
-                <Text fontSize="lg" fontWeight="bold" ml={2}>
-                  {ride.driver.name}
-                </Text>
-                <Badge
-                  variant="outline"
-                  colorScheme="green"
-                  fontSize="sm"
-                  ml={2}
+        <SimpleGrid columns={columnCount} spacing={18} mt={10}>
+          {filteredRideListings.map((ride, index) => (
+            <Grid templateColumns="repeat(1, 1fr)" gap={14} key={index}>
+              <GridItem key={ride.id} p={10}>
+                <Flex
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb={2}
                 >
-                  {ride.driver.rating} stars
-                </Badge>
-              </Flex>
-              <Box color={"goldenrod"} fontWeight={"bolder"}>
-                <Box display={"flex"} alignItems={"center"}>
-                  <FaRoad />
-                  <Text fontSize="md" mb={2} ml={2}>
-                    {ride.origin} → {ride.destination}
+                  <Text fontSize="lg" fontWeight="bold" ml={2}>
+                    {ride.username}
                   </Text>
-                </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <FaClock />
-                  <Text fontSize="md" mb={2} ml={2}>
-                    Estimated travel time: {ride.travelTime}
-                  </Text>
-                </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <FaDollarSign />
-                  <Text fontSize="md" mb={2} ml={2}>
-                    Estimated cost: {ride.cost}
-                  </Text>
-                </Box>
-
-                <Box display={"flex"} alignItems={"center"}>
-                  <FaCar />
-                  {ride.vehicle && (
+                  <Badge
+                    variant="outline"
+                    colorScheme="green"
+                    fontSize="sm"
+                    ml={2}
+                  >
+                    {ride.license_plate}
+                  </Badge>
+                </Flex>
+                <Box color={"goldenrod"} fontWeight={"bolder"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <FaRoad />
                     <Text fontSize="md" mb={2} ml={2}>
-                      Vehicle: {ride.vehicle}
+                      {ride.s_address} → {ride.d_address}
                     </Text>
-                  )}
+                  </Box>
+
+                  <Box display={"flex"} alignItems={"center"}>
+                    <FaCar />
+                    {ride.car_model && (
+                      <Text fontSize="md" mb={2} ml={2}>
+                        Vehicle: {ride.car_model}
+                      </Text>
+                    )}
+                  </Box>
+
+                  <Box display={"flex"} alignItems={"center"}>
+                    <FaChair />
+                    <Text fontSize="md" mb={2} ml={2}>
+                      Number of seats available: {ride.numberOfSite}
+                    </Text>
+                  </Box>
                 </Box>
 
-                <Box display={"flex"} alignItems={"center"}>
-                  <FaChair />
-                  <Text fontSize="md" mb={2} ml={2}>
-                    Number of seats available: {ride.numSeats}
-                  </Text>
-                </Box>
-                {/* imgae of car */}
-                <Box display={"flex"} alignItems={"center"}>
-                  <FaCar />
-                  <Img src={ride.carPhoto} placeholder="car picture" />
-                </Box>
-              </Box>
 
-              <Text
-                fontSize="md"
-                mb={2}
-                color={"goldenrod"}
-                fontWeight={"bolder"}
-              >
-                Driver preferences:{" "}
-                {ride.driverPrefs.map((pref, index) => (
+                <Text
+                  fontSize="md"
+                  mb={2}
+                  color={"goldenrod"}
+                  fontWeight={"bolder"}
+                >
+                  Smoking:{" "}
                   <Badge
                     key={index}
                     variant="outline"
                     colorScheme="gray"
                     mr={1}
                   >
-                    {pref}
+                    {ride.smoking}
                   </Badge>
-                ))}
-              </Text>
-              <Button
-                colorScheme="blue"
-                variant="solid"
-                size="sm"
-                w="100%"
-                mb={4}
-                onClick={handleclick}
-              >
-                Select
-              </Button>
-            </GridItem>
-          </Grid>
-        ))}
-      </SimpleGrid>
-    </Box>
+                </Text>
+                <Text
+                  fontSize="md"
+                  mb={2}
+                  color={"goldenrod"}
+                  fontWeight={"bolder"}
+                >
+                  Music:{" "}
+                  <Badge
+                    key={index}
+                    variant="outline"
+                    colorScheme="gray"
+                    mr={1}
+                  >
+                    {ride.music}
+                  </Badge>
+                </Text>
+                <Text
+                  fontSize="md"
+                  mb={2}
+                  color={"goldenrod"}
+                  fontWeight={"bolder"}
+                >
+                  Pet-Frendly:{" "}
+                  <Badge
+                    key={index}
+                    variant="outline"
+                    colorScheme="gray"
+                    mr={1}
+                  >
+                    {ride.pet_friendly}
+                  </Badge>
+                </Text>
+                <Button
+                  colorScheme="blue"
+                  variant="solid"
+                  size="sm"
+                  w="100%"
+                  mb={4}
+                  onClick={() => handleclick(ride)}
+                >
+                  Select
+                </Button>
+              </GridItem>
+            </Grid>
+          ))}
+        </SimpleGrid>
+      </Box>
+    </>
   );
 };
 

@@ -15,31 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { FaHandPointRight, FaStar } from "react-icons/fa";
 import RideRequest from "../RideRequestCompnent/RideRequests";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const RideRequestsComponent = () => {
-  const [rideRequests, setRideRequests] = useState([]);
-  const [isOnline, setIsOnline] = useState(true);
-  useEffect(() => {
-    const fetchRideRequests = async () => {
-      try {
-        const response = await fetch("http://localhost:8081/ride-request");
-        if (!response.ok) {
-          throw new Error("Failed to fetch ride requests");
-        }
-        const data = await response.json();
-        setRideRequests(data);
-      } catch (error) {
-        console.error("Error fetching ride requests:", error);
-      }
-    };
-
-    fetchRideRequests();
-  }, []);
+const Dashboard = () => {
   const earnings = {
     daily: "$100.00",
     weekly: "$500.00",
   };
+  const [isOnline, setIsOnline] = useState(true);
 
   const handleToggleOnlineStatus = () => {
     setIsOnline(!isOnline);
@@ -134,10 +117,9 @@ const RideRequestsComponent = () => {
           </Box>
         </Center>
       </Box>
-      {isOnline && <RideRequest requests={rideRequests} />}
+      {isOnline && <RideRequest />}
     </Box>
   );
 };
 
-export default RideRequestsComponent;
-
+export default Dashboard;

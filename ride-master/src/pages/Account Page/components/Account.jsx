@@ -1,7 +1,7 @@
 import Topbar from "../../HomePage/components/TopbarComponent/Topbar";
 import PaymentMethods from "./Payment Methods Component/PaymentMethods";
 import Profile from "./Profile Information Componet/Profile";
-import RideHistory from "./Ride History Component/RideHistory";
+import Settings from "./Settings component/Setting";
 import Footer from "../../HomePage/components/FooterComponent/Footer";
 function Account() {
   return (
@@ -9,7 +9,7 @@ function Account() {
       <Topbar />
       <Profile />
       <PaymentMethods/>
-      <RideHistory />
+      <Settings />
       <Footer/>
     </>
   );
